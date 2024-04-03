@@ -53,14 +53,6 @@ class CategoryResource extends Resource
                             ->default(true)
             ])
 
-                // Forms\Components\TextInput::make('name')
-                //     ->required(),
-                // Forms\Components\TextInput::make('slug')
-                //     ->required(),
-                // Forms\Components\FileUpload::make('image')
-                //     ->image(),
-                // Forms\Components\Toggle::make('is_active')
-                //     ->required(),
             ]);
     }
 
