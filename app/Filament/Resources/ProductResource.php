@@ -17,6 +17,7 @@ use Filament\Forms\Form;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Builder;
@@ -27,6 +28,11 @@ class ProductResource extends Resource
     protected static ?string $model = Product::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {
@@ -43,7 +49,7 @@ class ProductResource extends Resource
                                     return;
                                 }
                                 $slug = Str::slug($title = $state);
-                                $set('slug', ($slug) );
+                                $set('slug', ($slug));
                             }),
 
                         TextInput::make('slug')
@@ -106,7 +112,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-               
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
@@ -136,7 +142,10 @@ class ProductResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                //
+                SelectFilter::make('category')
+                    ->relationship('category', 'name'),
+                SelectFilter::make('brand')
+                    ->relationship('brand', 'name'),
             ])
             ->actions([
                 Tables\Actions\ActionGroup::make([

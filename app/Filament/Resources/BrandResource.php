@@ -26,6 +26,11 @@ class BrandResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-computer-desktop';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -38,7 +43,7 @@ class BrandResource extends Resource
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create'? $set('slug', Str::slug($state)) : null),
+                                ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                             TextInput::make('slug')
                                 ->maxLength(255)
                                 ->required()
@@ -46,13 +51,13 @@ class BrandResource extends Resource
                                 ->dehydrated()
                                 ->unique(Brand::class, 'slug', ignoreRecord: true)
                         ]),
-                         FileUpload::make('image')
-                            ->image()
-                            ->directory('categories'),
-                        Toggle::make('is_active')
-                            ->required()
-                            ->default(true)
-            ])
+                    FileUpload::make('image')
+                        ->image()
+                        ->directory('brands'),
+                    Toggle::make('is_active')
+                        ->required()
+                        ->default(true)
+                ])
 
             ]);
     }
@@ -106,7 +111,7 @@ class BrandResource extends Resource
         return [
             'index' => Pages\ListBrands::route('/'),
             'create' => Pages\CreateBrand::route('/create'),
-            'view' => Pages\ViewBrand::route('/{record}'),
+            // 'view' => Pages\ViewBrand::route('/{record}'),
             'edit' => Pages\EditBrand::route('/{record}/edit'),
         ];
     }

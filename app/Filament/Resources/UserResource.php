@@ -22,6 +22,11 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,11 +37,11 @@ class UserResource extends Resource
                     ->email()
                     ->required(),
                 Forms\Components\DateTimePicker::make('email_verified_at')
-                ->default(now()),
+                    ->default(now()),
                 Forms\Components\TextInput::make('password')
                     ->password()
                     ->dehydrated(fn ($state) => filled($state))
-                    ->required(fn (Page $livewire) : bool => $livewire instanceof  CreateRecord),
+                    ->required(fn (Page $livewire): bool => $livewire instanceof  CreateRecord),
             ]);
     }
 
@@ -64,13 +69,13 @@ class UserResource extends Resource
                 //
             ])
             ->actions([
-               Tables\Actions\ActionGroup::make([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
 
-               ])
-            
+                ])
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
