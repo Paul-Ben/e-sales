@@ -29,6 +29,11 @@ class ProductResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -44,7 +49,7 @@ class ProductResource extends Resource
                                     return;
                                 }
                                 $slug = Str::slug($title = $state);
-                                $set('slug', ($slug) );
+                                $set('slug', ($slug));
                             }),
 
                         TextInput::make('slug')
@@ -107,7 +112,7 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-               
+
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')

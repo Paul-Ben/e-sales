@@ -26,6 +26,11 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -37,7 +42,7 @@ class CategoryResource extends Resource
                                 ->required()
                                 ->maxLength(255)
                                 ->live(onBlur: true)
-                                ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create'? $set('slug', Str::slug($state)) : null),
+                                ->afterStateUpdated(fn (string $operation, $state, Set $set) => $operation === 'create' ? $set('slug', Str::slug($state)) : null),
                             TextInput::make('slug')
                                 ->maxLength(255)
                                 ->required()
@@ -45,13 +50,13 @@ class CategoryResource extends Resource
                                 ->dehydrated()
                                 ->unique(Category::class, 'slug', ignoreRecord: true)
                         ]),
-                         FileUpload::make('image')
-                            ->image()
-                            ->directory('categories'),
-                        Toggle::make('is_active')
-                            ->required()
-                            ->default(true)
-            ])
+                    FileUpload::make('image')
+                        ->image()
+                        ->directory('categories'),
+                    Toggle::make('is_active')
+                        ->required()
+                        ->default(true)
+                ])
 
             ]);
     }
@@ -80,7 +85,7 @@ class CategoryResource extends Resource
                 //
             ])
             ->actions([
-    
+
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
