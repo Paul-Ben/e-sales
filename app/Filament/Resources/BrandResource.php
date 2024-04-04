@@ -48,7 +48,7 @@ class BrandResource extends Resource
                         ]),
                          FileUpload::make('image')
                             ->image()
-                            ->directory('categories'),
+                            ->directory('brands'),
                         Toggle::make('is_active')
                             ->required()
                             ->default(true)
@@ -106,7 +106,7 @@ class BrandResource extends Resource
         return [
             'index' => Pages\ListBrands::route('/'),
             'create' => Pages\CreateBrand::route('/create'),
-            'view' => Pages\ViewBrand::route('/{record}'),
+            // 'view' => Pages\ViewBrand::route('/{record}'),
             'edit' => Pages\EditBrand::route('/{record}/edit'),
         ];
     }
