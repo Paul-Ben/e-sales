@@ -12,6 +12,7 @@ use App\Livewire\MyOrdersPage;
 use App\Livewire\OrderDetailPage;
 use App\Livewire\ProductDetailPage;
 use App\Livewire\ProductsPage;
+use App\Livewire\SuccessPage;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -19,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/', HomePage::class)->name('homepage');
-Route::get('/cetegories', CategoriesPage::class);
+Route::get('/categories', CategoriesPage::class);
 Route::get('/products', ProductsPage::class);
 Route::get('/cart', CartPage::class); 
 
@@ -32,3 +33,4 @@ Route::get('/login', LoginPage::class);
 Route::get('/register', RegisterPage::class);
 Route::get('/forgot', ForgotPage::class);
 Route::get('/reset', ResetPasswordPage::class);
+Route::get('/success', SuccessPage::class);
