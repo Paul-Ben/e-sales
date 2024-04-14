@@ -11,7 +11,7 @@ class CategoriesPage extends Component
     #[Title('Categories')]
     public function render()
     {
-        $categories = Category::where('is_active', 1)->get();
+        $categories = Category::all();
         return view('livewire.categories-page', compact('categories'));
     }
 }
