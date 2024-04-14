@@ -105,7 +105,7 @@ class ProductResource extends Resource
                             ->default(true),
                         Toggle::make('is_featured')
                             ->required(),
-                        Toggle::make('on_sale')
+                        Toggle::make('is_onsale')
                             ->required(),
                     ])
                 ])->columnSpan(1),
