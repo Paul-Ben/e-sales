@@ -30,6 +30,9 @@ class ProductsPage extends Component
     #[Url]
     public $price_range = 0;
 
+    #[Url]
+    public $sort;
+
     public function render()
     {
         $products = Product::where('is_active', 1)->paginate(9);
@@ -60,7 +63,15 @@ class ProductsPage extends Component
             $products = Product::where('is_active', 1)->whereBetween('price', [0, $this->price_range])->paginate(9);
         }
 
-        // $instock = Product::where('in_stock', 1)->get();
+        if ($this->sort == 'price') {
+            $products = Product::where('is_active', 1)->orderBy('price')->paginate(9);
+        }
+
+        if ($this->sort == 'latest') {
+            $products = Product::where('is_active', 1)->latest()->paginate(9);
+        }
+
+      
         $brands = Brand::where('is_active', 1)->get();
         $categories = Category::where('is_active', 1)->get();
         return view('livewire.products-page', compact('products', 'brands', 'categories'));
